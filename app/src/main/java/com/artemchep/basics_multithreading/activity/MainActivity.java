@@ -43,25 +43,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
 //        showWelcomeDialog();
-
         bgThread.start();
         bgThreadHandler = new Handler(bgThread.getLooper(), backgroundThreadCallback);
-    }
-
-    @Override
-    protected void onDestroy() {
-        bgThread.quit();
-        super.onDestroy();
-    }
-
-    private void showWelcomeDialog() {
-        new AlertDialog.Builder(this)
-                .setMessage("What are you going to need for this task: Thread, Handler.\n" +
-                        "\n" +
-                        "1. The main thread should never be blocked.\n" +
-                        "2. Messages should be processed sequentially.\n" +
-                        "3. The elapsed time SHOULD include the time message spent in the queue.")
-                .show();
     }
 
     public void onPushBtnClick(View view) {
@@ -86,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
-
         throw new IllegalStateException();
     }
 
@@ -121,4 +103,20 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    private void showWelcomeDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage("What are you going to need for this task: Thread, Handler.\n" +
+                        "\n" +
+                        "1. The main thread should never be blocked.\n" +
+                        "2. Messages should be processed sequentially.\n" +
+                        "3. The elapsed time SHOULD include the time message spent in the queue.")
+                .show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        bgThread.quit();
+        super.onDestroy();
+    }
 }
